@@ -35,6 +35,7 @@ void profile ::registing(){
         cout << "invalid email!\nPlease try again: ";
         cin >> email;
     }
+    search_mail(email);
     
     cout << "Please enter your phon: ";
     cin >> phon;
@@ -70,6 +71,34 @@ bool profile ::check_name(string str){
 bool profile ::check_mail(string str){
     regex check_mail("^[a-zA-Z0-9_]+@(hotmail|yahoo|gmail)+.(com|edu|net)$");
     return regex_match(str, check_mail);
+}
+
+void profile:: search_mail(string a)
+{
+    int x;
+    fstream reg;
+    reg.open("profile_data.txt", ios ::in);
+   
+    while (!reg.eof()){
+        while (getline(reg, a)){
+            if (a.find(email, 1) != string ::npos){
+                cout << "That email has been used before!\nPlease enter another one: ";
+                cin >> email;
+                while (!check_mail(email)){
+                    cout << "invalid email!\nPlease try again: ";
+                    cin >> email;
+                }
+                x = 1;
+                break;
+            }
+        }
+        if (x == 0){
+            cout << "valid email" << endl;
+            break;
+        }
+    }
+
+    reg.close();
 }
 
 bool profile ::check_phon(string str){
