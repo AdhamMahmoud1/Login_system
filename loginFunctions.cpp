@@ -8,7 +8,8 @@
 
 using namespace std;
 string pass;
-void profile ::registing(){
+void profile ::registing()
+{
    
     cout << "Please Enter your name: ";
     cin >> name;
@@ -47,28 +48,37 @@ void profile ::registing(){
     saveData();
 }
 
-void profile ::saveData(){
+void profile ::saveData()
+{
     ofstream reg("profile_data.txt", ios ::app);
     reg << "name: " << name << endl
-        << "Id: " << id << endl
         << "Password: " << pass << endl
         << "email: " << email << endl
-        << "phon: " << phon << "\n\n";
+        << "phon: " << phon << endl 
+        << "Id: " << id << "\n\n";
+        
     reg.close();
 }
-int profile::encrypt(int letter){
+
+int profile::encrypt(int letter)
+{
     return letter + 3;
 }
 
-bool profile :: check_id(string str){
+bool profile :: check_id(string str)
+{
     regex check_id("20(19|20|21)[0-9]{4}");
     return regex_match(str, check_id);
 }
-bool profile ::check_name(string str){
+
+bool profile ::check_name(string str)
+{
     regex check_name("[A-Z]+[a-z]*");
     return regex_match(str, check_name);
 }
-bool profile ::check_mail(string str){
+
+bool profile ::check_mail(string str)
+{
     regex check_mail("^[a-zA-Z0-9_]+@(hotmail|yahoo|gmail)+.(com|edu|net)$");
     return regex_match(str, check_mail);
 }
@@ -80,8 +90,10 @@ void profile:: search_mail(string a)
     reg.open("profile_data.txt", ios ::in);
    
     while (!reg.eof()){
-        while (getline(reg, a)){
-            if (a.find(email, 1) != string ::npos){
+        while (getline(reg, a))
+        {
+            if (a.find(email, 1) != string ::npos)
+            {
                 cout << "That email has been used before!\nPlease enter another one: ";
                 cin >> email;
                 while (!check_mail(email)){
@@ -92,7 +104,8 @@ void profile:: search_mail(string a)
                 break;
             }
         }
-        if (x == 0){
+        if (x == 0)
+        {
             cout << "valid email" << endl;
             break;
         }
@@ -101,107 +114,274 @@ void profile:: search_mail(string a)
     reg.close();
 }
 
-bool profile ::check_phon(string str){
+bool profile ::check_phon(string str)
+{
     regex check_phon("01[0125][0-9]{8}");
     return regex_match(str, check_phon);
 }
-bool profile ::strong_pass(string& str){
+
+bool profile ::strong_pass(string& str)
+{
     regex pass_format("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");              // should contain at least one upper case  (?=.*?[A-Z])
       return regex_match(str,pass_format);                                                           // should contain at least one lower case  (?=.*?[a-z])
-       }                                                                                            // should contain at least one digit       (?=.*?[0-9])                                                                                                         // should contain at least one Special character      (?=.*?[#?!@$%^&*-])   
+}                                                                                            // should contain at least one digit       (?=.*?[0-9])                                                                                                         // should contain at least one Special character      (?=.*?[#?!@$%^&*-])   
                                                                                                   // Must be at least 8 characters in length      {8,}
-bool profile :: is_valid_repeated(string& str){
-bool check = true;
-char ch;
-string password2;
-cout<<"comfirm your password: \n";
- char c;
-for(int i=0;i<1000;i++)
-	{
-	 c=getch();
-	 if(c=='\r'){
-         break;
-         }
-         else if(c=='\b'){
-             cout<<"\b \b";
-         }
-         else{
-	 cout<<"*";
-	 password2+=c;}
-	}
+bool profile :: is_valid_repeated(string& str)
+{
+    bool check = true;
+    char ch;
+    string password2;
+    cout<<"comfirm your password: \n";
+    char c;
+    for(int i=0;i<1000;i++)
+    {
+        c=getch();
+        if(c=='\r')
+        {
+            break;
+        }
+        else if(c=='\b')
+        {
+            cout<<"\b \b";
+        }
+        else
+        {
+            cout<<"*";
+            password2+=c;
+        }
+    }
     cout<<endl;
 
-while (true)
-{  
-    if(password2!=str){
-        check=false;
-        cout<<"your should match your password\n";
-        cout<<"rewrite your password again: \n";
-         char c;
- for(int i=0;i<1000;i++)
-	{
-	 c=getch();
-	 if(c=='\r'){
-         break;
-         }
-         else if(c=='\b'){
-             cout<<"\b \b";
-         } else{
-	cout<<"*";
-	 password2+=c;}
-	}
-    cout<<endl;
-}
-    else{
-        cout<<"your password saved";
-        break;
-        } 
-    }
+    while (true)
+    {  
+        
+        if(password2!=str)
+        {
+            check=false;
+            cout<<"your should match your password\n";
+            cout<<"rewrite your password again: \n";
+            char c;
+            for(int i=0;i<1000;i++)
+            {
+                c=getch();
+                if(c=='\r')
+                {
+                    break;
+                }
+                else if(c=='\b')
+                {
+                    cout<<"\b \b";
+                } else
+                {
+                    cout<<"*";
+                    password2+=c;
+                }
+            }
+        cout<<endl;
+        }
+        else{
+            cout<<"your password saved";
+            break;
+            } 
+        }
     return 0;
-}  
-bool profile ::  is_valid_password(string& str){
+}
+
+bool profile ::  is_valid_password(string& str)
+{
     bool check=true;
-char c;
+    char c;
         //  for loop to input the password without being  seen
-for(int i=0;i<1000;i++)
+    for(int i=0;i<1000;i++)
 	{
-	   c=getch();                    
-	 if(c=='\r'){ 
-         break;}                   
-         else if(c=='\b'){
+	    c=getch();                    
+	    if(c=='\r')
+        { 
+            break;
+        }                   
+        else if(c=='\b')
+        {
             cout<<"\b \b";     
  
-         }else{
-	 cout<<"*";
-	 password+=c;}
-	}
-cout<<endl;
-while (true)
-{  
-if(strong_pass(password)){
-    cout<<"strong password\n";
-    break;
-}
-else{
-    cout<<"week password\n";
-    check=false;
-    cout<<"Enter your password again: \n";
-     char c;
-for(int i=0;i<1000;i++)
-	{
-	 c=getch();
-	 if(c=='\r' ){
-         break;}
-    else if (c=='\b'){
-             cout<<"\b \b";
-         
-         }else{
-	 cout<<"*";
-	 password+=c;}
+        }else
+        {
+	        cout<<"*";
+	        password+=c;
+        }
 	}
     cout<<endl;
-    } 
+    while (true)
+    {  
+        if(strong_pass(password))
+        {
+            cout<<"strong password\n";
+            break;
+        }
+        else
+        {
+            cout<<"week password\n";
+            check=false;
+            cout<<"Enter your password again: \n";
+            char c;
+            for(int i=0;i<1000;i++)
+            {
+                c=getch();
+                if(c=='\r' )
+                {
+                    break;}
+                else if (c=='\b')
+                {
+                        cout<<"\b \b";
+                    
+                }else
+                    {
+                cout<<"*";
+                password+=c;}
+            }
+            cout<<endl;
+        } 
+    }
+    is_valid_repeated(password);
+    return 0;
 }
-is_valid_repeated(password);
-return 0;
+
+//________________________________________________________________________
+
+void profile :: login()
+{
+    cout << "\nEnter ID, Email, PassWord. \n";
+    cout << "Please enter your ID: ";
+    cin >> IDAttempt;
+    while (!check_id(IDAttempt)){
+        cout<< "invalid id!\nPlease try again: ";
+        cin >> IDAttempt;
+    }
+
+
+    cout << "Enter your Email:";
+    cin >> UserNameAttempt;
+
+    if(checkFile(UserNameAttempt, IDAttempt, "profile_data.txt"))
+    {
+        string pass;
+        cout<<"Enter your password: ";
+        char c;
+                
+        //  for loop to input the password without being  seen
+        for(int i=0;i<1000;i++)
+        {
+            c=getch();                    
+            if(c=='\r')
+            { 
+                break;
+            }                   
+            else if(c=='\b')
+            {
+                cout<<"\b \b";     
+    
+            }else
+            {
+                cout<<"*";
+                PassWordAttempt += c;
+                
+            }
+        }
+
+        for (int i = 0; i < PassWordAttempt.length(); i++)
+        {
+            pass += encrypt(PassWordAttempt[i]);
+        }
+        if(checkFile(pass, IDAttempt, "profile_data.txt"))
+        {
+            cout << "\nSuccessful login\n\n";
+            PassWordAttempt.erase(PassWordAttempt.begin(), PassWordAttempt.end());
+            
+
+        }else
+        {
+            cout << "\nInValid PassWord :(\nTry Again :)\n";
+            PassWordAttempt.erase(PassWordAttempt.begin(), PassWordAttempt.end());
+            login();
+        }
+    }else
+    {
+        cout << "\nInvalid UserName or Paasword :(\n try Again :)\n";
+        PassWordAttempt.erase(PassWordAttempt.begin(), PassWordAttempt.end());
+        login();
+    }
+
+}
+
+bool profile :: checkFile(string attempt, string ID, const char* filePath)
+{
+    string word, content, object, line;
+    fstream myfile;
+    int a = 0;
+
+    myfile.open(filePath, ios::in);
+
+    if(!myfile)
+    {
+        cout<<"error whlie opening file";
+        return false;
+    }
+    else
+    {
+        while (true)
+        {
+        
+            while(getline(myfile,word))
+            {
+                stringstream sin(word);
+                sin >> object;
+                sin >> content;
+
+            
+                if(content == ID)
+                {
+                    
+                    if(searchForWord(line, attempt))
+                    {
+                        a = 1;
+                        return true;
+                    }else
+                    {
+                        line.erase(line.begin(),line.end());
+                    }
+                }else if(object == "Id:")
+                {
+                    line.erase(line.begin(),line.end());
+                }else
+                {
+                    line += (content + "\n");
+                }
+                
+            }
+
+            if(a == 0)
+            {
+                return false;
+            }
+
+            if(myfile.peek() == EOF)
+            {
+                myfile.close();
+                return false;
+            }
+
+
+        }
+    }
+    
+}
+
+bool profile :: searchForWord(string line, string attempt1)
+{
+    if(line.find(attempt1,0) != string :: npos)
+    {
+        return true;
+    }else
+    {
+        return false;
+    }
 }

@@ -19,9 +19,14 @@ private:
     string password;
     string phon;
     string a;
+    
+    //login variables 
+    string UserNameAttempt;
+    string PassWordAttempt;
+    string IDAttempt; 
 
 public:
-    void data(string n, string i, string m, string pw, string p, string em)
+    void data(string n, string i, string m, string pw, string p, string em, string uA, string pA, string iA)
     {
         name = n;
         id = i;
@@ -29,9 +34,12 @@ public:
         password = pw;
         phon = p;
         a = em;
+
+        UserNameAttempt = uA;
+        PassWordAttempt = pA;
+        IDAttempt = iA;
     }
     void registing();
-    void login();
     void saveData();
     int encrypt(int letter);
     bool check_name(string);
@@ -42,5 +50,11 @@ public:
     bool is_valid_repeated(string& str); 
     bool strong_pass(string& str);
     bool is_valid_password(string& str);
+
+    // login functions
+    void login();
+    bool checkFile(string attempt, string ID, const char* filePath);
+    bool searchForWord(string line, string attempt1);
+
 };
 #endif
