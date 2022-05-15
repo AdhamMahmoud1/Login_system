@@ -132,25 +132,8 @@ bool profile :: is_valid_repeated(string& str)
     char ch;
     string password2;
     cout<<"comfirm your password: \n";
-    char c;
-    for(int i=0;i<1000;i++)
-    {
-        c=getch();
-        if(c=='\r')
-        {
-            break;
-        }
-        else if (c=='\b' && i>=1) {
-            cout << "\b \b"; // to delete wrong character that user input. /b = backspace
-            i--;
-        }
-        else
-        {
-            cout<<"*";
-            password2+=c;
-        }
-    }
-    cout<<endl;
+ insertPasword();
+   
 
     while (true)
     {  
@@ -160,24 +143,7 @@ bool profile :: is_valid_repeated(string& str)
             check=false;
             cout<<"your should match your password\n";
             cout<<"rewrite your password again: \n";
-            char c;
-            for(int i=0;i<1000;i++)
-            {
-                c=getch();
-                if(c=='\r')
-                {
-                    break;
-                }
-                else  if (c=='\b' && i>=1) {
-            cout << "\b \b"; // to delete wrong character that user input. /b = backspace
-            i--;
-        } else
-                {
-                    cout<<"*";
-                    password2+=c;
-                }
-            }
-        cout<<endl;
+            insertPasword();
         }
         else{
             cout<<"your password saved";
@@ -187,27 +153,11 @@ bool profile :: is_valid_repeated(string& str)
     return 0;
 }
 
-bool profile ::  is_valid_password(string& str)
+void profile ::  is_valid_password(string& str)
 {
     bool check=true;
-    char c;
-        //  for loop to input the password without being  seen
-    for(int i=0;i<1000;i++)
-	{
-	    c=getch();                    
-	    if(c=='\r')
-        { 
-            break;
-        }                   
-        else    if (c=='\b' && i>=1) {
-            cout << "\b \b"; // to delete wrong character that user input. /b = backspace
-            i--;
-        }else
-        {
-	        cout<<"*";
-	        password+=c;
-        }
-	}
+ insertPasword();
+	
     cout<<endl;
     while (true)
     {  
@@ -221,26 +171,12 @@ bool profile ::  is_valid_password(string& str)
             cout<<"week password\n";
             check=false;
             cout<<"Enter your password again: \n";
-            char c;
-            for(int i=0;i<1000;i++)
-            {
-                c=getch();
-                if(c=='\r' )
-                {
-                    break;}
-                else    if (c=='\b' && i>=1) {
-            cout << "\b \b"; // to delete wrong character that user input. /b = backspace
-            i--;
-        }else
-                    {
-                cout<<"*";
-                password+=c;}
-            }
-            cout<<endl;
-        } 
+        insertPasword();
     }
     is_valid_repeated(password);
-    return 0;
+    
+}
+
 }
 
 //________________________________________________________________________
@@ -263,26 +199,7 @@ void profile :: login()
     {
         string pass;
         cout<<"Enter your password: ";
-        char c;
-                
-        //  for loop to input the password without being  seen
-        for(int i=0;i<1000;i++)
-        {
-            c=getch();                    
-            if(c=='\r')
-            { 
-                break;
-            }                   
-            else   if (c=='\b' && i>=1) {
-            cout << "\b \b"; // to delete wrong character that user input. /b = backspace
-            i--;
-        }else
-            {
-                cout<<"*";
-                PassWordAttempt += c;
-                
-            }
-        }
+        insertPasword();
 
         for (int i = 0; i < PassWordAttempt.length(); i++)
         {
@@ -381,4 +298,37 @@ bool profile :: searchForWord(string line, string attempt1)
     {
         return false;
     }
+}
+string profile::insertPasword() {
+
+    
+    char ch;
+
+   
+    string password;
+
+    // while pressed key not equal enter
+    while ((ch = getch()) != '\r')
+    {
+        // check if returned key from getch is a backspace and stream isn't empty
+        if ((ch == 8) && (password.size() > 0))
+        {
+            // use pop_back to remove the last character added to the string
+            password.pop_back();
+
+            // use \d \d to remove the last * from stream
+            cout << "\b \b";
+        }
+        else
+        {
+            
+            cout << '*';
+
+           
+            password += ch;
+        }
+    }
+    cout << endl;
+    return password;
+
 }
