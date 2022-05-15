@@ -140,9 +140,9 @@ bool profile :: is_valid_repeated(string& str)
         {
             break;
         }
-        else if(c=='\b')
-        {
-            cout<<"\b \b";
+        else if (c=='\b' && i>=1) {
+            cout << "\b \b"; // to delete wrong character that user input. /b = backspace
+            i--;
         }
         else
         {
@@ -168,10 +168,10 @@ bool profile :: is_valid_repeated(string& str)
                 {
                     break;
                 }
-                else if(c=='\b')
-                {
-                    cout<<"\b \b";
-                } else
+                else  if (c=='\b' && i>=1) {
+            cout << "\b \b"; // to delete wrong character that user input. /b = backspace
+            i--;
+        } else
                 {
                     cout<<"*";
                     password2+=c;
@@ -199,10 +199,9 @@ bool profile ::  is_valid_password(string& str)
         { 
             break;
         }                   
-        else if(c=='\b')
-        {
-            cout<<"\b \b";     
- 
+        else    if (c=='\b' && i>=1) {
+            cout << "\b \b"; // to delete wrong character that user input. /b = backspace
+            i--;
         }else
         {
 	        cout<<"*";
@@ -229,11 +228,10 @@ bool profile ::  is_valid_password(string& str)
                 if(c=='\r' )
                 {
                     break;}
-                else if (c=='\b')
-                {
-                        cout<<"\b \b";
-                    
-                }else
+                else    if (c=='\b' && i>=1) {
+            cout << "\b \b"; // to delete wrong character that user input. /b = backspace
+            i--;
+        }else
                     {
                 cout<<"*";
                 password+=c;}
@@ -275,11 +273,10 @@ void profile :: login()
             { 
                 break;
             }                   
-            else if(c=='\b')
-            {
-                cout<<"\b \b";     
-    
-            }else
+            else   if (c=='\b' && i>=1) {
+            cout << "\b \b"; // to delete wrong character that user input. /b = backspace
+            i--;
+        }else
             {
                 cout<<"*";
                 PassWordAttempt += c;
