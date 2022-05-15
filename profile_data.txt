@@ -10,3 +10,39 @@ email: 12121212aboziad@gmail.com
 phon: 01061988605
 Id: 20211060
 
+name: Adam
+Password: 
+email: mazen@gmail.com
+phon: 01263344560
+Id: 20210000
+
+name: Mazen
+Password: Mazen1234!
+email: adam@gmail.com
+phon: 01056678687
+Id: 20212121
+
+name: Ziad
+Password: Mazen123!
+email: adsw@gmail.com
+phon: 01223321345
+Id: 20210021
+
+name: Asd
+Password: Mazen1234!Pd}hq4567$
+email: azsx@gmail.com
+phon: 01212234567
+Id: 20202020
+
+name: Aqws
+Password: Pd}hq4567$
+email: asder@gmail.com
+phon: 01203321456
+Id: 20213333
+
+name: Aokm
+Password: Pd}hq4567$
+email: azsd@gmail.com
+phon: 01102234596
+Id: 20210212
+

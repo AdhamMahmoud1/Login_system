@@ -50,7 +50,7 @@ public:
     bool is_valid_repeated(string& str); 
     bool strong_pass(string& str);
     void is_valid_password(string& str);
-    string insertPasword();
+    string insertPasword(string& str);
 
     // login functions
     void login();

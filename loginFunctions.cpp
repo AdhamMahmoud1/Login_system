@@ -129,10 +129,9 @@ bool profile ::strong_pass(string& str)
 bool profile :: is_valid_repeated(string& str)
 {
     bool check = true;
-    char ch;
     string password2;
     cout<<"comfirm your password: \n";
- insertPasword();
+   insertPasword(password2);
    
 
     while (true)
@@ -143,7 +142,7 @@ bool profile :: is_valid_repeated(string& str)
             check=false;
             cout<<"your should match your password\n";
             cout<<"rewrite your password again: \n";
-            insertPasword();
+            insertPasword(password2);
         }
         else{
             cout<<"your password saved";
@@ -151,17 +150,18 @@ bool profile :: is_valid_repeated(string& str)
             } 
         }
     return 0;
+    
 }
 
 void profile ::  is_valid_password(string& str)
 {
     bool check=true;
- insertPasword();
+  string x=insertPasword(str);
 	
     cout<<endl;
     while (true)
     {  
-        if(strong_pass(password))
+        if(strong_pass(x))
         {
             cout<<"strong password\n";
             break;
@@ -171,11 +171,12 @@ void profile ::  is_valid_password(string& str)
             cout<<"week password\n";
             check=false;
             cout<<"Enter your password again: \n";
-        insertPasword();
-    }
-    is_valid_repeated(password);
+         insertPasword(str);
+
+    }    
     
 }
+is_valid_repeated(x);
 
 }
 
@@ -199,11 +200,11 @@ void profile :: login()
     {
         string pass;
         cout<<"Enter your password: ";
-        insertPasword();
+       string x= insertPasword(pass);
 
         for (int i = 0; i < PassWordAttempt.length(); i++)
         {
-            pass += encrypt(PassWordAttempt[i]);
+            x += encrypt(PassWordAttempt[i]);
         }
         if(checkFile(pass, IDAttempt, "profile_data.txt"))
         {
@@ -299,22 +300,22 @@ bool profile :: searchForWord(string line, string attempt1)
         return false;
     }
 }
-string profile::insertPasword() {
+string profile::insertPasword(string& str) {
 
     
     char ch;
 
    
-    string password;
+    
 
     // while pressed key not equal enter
     while ((ch = getch()) != '\r')
     {
         // check if returned key from getch is a backspace and stream isn't empty
-        if ((ch == 8) && (password.size() > 0))
+        if ((ch == 8) && (str.size() > 0))
         {
             // use pop_back to remove the last character added to the string
-            password.pop_back();
+            str.pop_back();
 
             // use \d \d to remove the last * from stream
             cout << "\b \b";
@@ -325,10 +326,10 @@ string profile::insertPasword() {
             cout << '*';
 
            
-            password += ch;
+            str += ch;
         }
     }
     cout << endl;
-    return password;
+    return str;
 
 }
