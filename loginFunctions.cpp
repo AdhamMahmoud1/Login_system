@@ -135,7 +135,7 @@ bool profile :: is_valid_repeated(string& str)
     string password2;
     cout<<"comfirm your password: \n";
    insertPasword(password2);
-   cout << "password2:" << password2 <<endl;
+   
 
     while (true)
     {  
@@ -147,7 +147,7 @@ bool profile :: is_valid_repeated(string& str)
             cout<<"your should match your password\n";
             cout<<"rewrite your password again: \n";
             insertPasword(password2);
-            cout << "password2:" << password2 <<endl;
+    
         }
         else{
             cout<<"your password saved";
@@ -163,7 +163,7 @@ void profile ::  is_valid_password(string& str)
     bool check=true;
     str.erase(str.begin(), str.end());
     string x = insertPasword(str);
-	cout << "x:" << x << endl;
+	
     cout<<endl;
     while (true)
     {  
@@ -181,7 +181,7 @@ void profile ::  is_valid_password(string& str)
             cout<<"Enter your password again: \n";
             str.erase(str.begin(), str.end());
             x = insertPasword(str);
-            cout << "x:" << x << endl;
+            
 
         }    
     
@@ -194,9 +194,18 @@ void profile ::  is_valid_password(string& str)
 
 void profile :: login()
 {
-    cout << "\nEnter ID, Email, PassWord. \n";
+    // will print this statment if the user choosed just 1_login Not 2_ChangePassword
+    if(turn != 1)
+    {
+        cout << "To login " << endl;
+        cout << "Enter ID, Email, PassWord. \n";
+    }else
+    {
+        cout << "To change your Passwrod " << endl;
+    }
 
-    cout << "Please enter your ID: ";
+
+    cout << "Enter your ID: ";
     cin >> IDAttempt;
     while (!check_id(IDAttempt)){
         cout<< "invalid id!\nPlease try again: ";
@@ -214,15 +223,10 @@ void profile :: login()
         string y ;
         PassWordAttempt = insertPasword(y);
 
-        cout << "turn=" << turn << endl;
-        cout << "passwordAttempt: " << PassWordAttempt << endl;
-
         for (int i = 0; i < PassWordAttempt.length(); i++)
         {
             encryptedPass += encrypt(PassWordAttempt[i]);
         }
-
-        cout << "encryptedpass: " << encryptedPass<< endl;
 
         if(checkFile(encryptedPass, IDAttempt, "profile_data.txt"))
         {
@@ -236,7 +240,7 @@ void profile :: login()
             }
             else
             {
-                cout << "\nvalid login \n\n" ;
+                cout << "valid login \n\n" ;
             }
 
         }else
@@ -418,7 +422,6 @@ string profile::insertPasword(string& str)
             str += ch;
         }
     }
-    cout <<endl << "str:" << str << endl;
     cout << endl;
     return str;
 
