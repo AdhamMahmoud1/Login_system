@@ -8,6 +8,8 @@
 
 using namespace std;
 string pass;
+string encryptedPass;
+
 void profile ::registing()
 {
    
@@ -58,6 +60,7 @@ void profile ::saveData()
         << "Id: " << id << "\n\n";
         
     reg.close();
+    pass.erase(pass.begin(), pass.end());
 }
 
 int profile::encrypt(int letter)
@@ -132,17 +135,19 @@ bool profile :: is_valid_repeated(string& str)
     string password2;
     cout<<"comfirm your password: \n";
    insertPasword(password2);
-   
+   cout << "password2:" << password2 <<endl;
 
     while (true)
     {  
         
         if(password2!=str)
         {
+            password2.erase(password2.begin(), password2.end());
             check=false;
             cout<<"your should match your password\n";
             cout<<"rewrite your password again: \n";
             insertPasword(password2);
+            cout << "password2:" << password2 <<endl;
         }
         else{
             cout<<"your password saved";
@@ -156,8 +161,9 @@ bool profile :: is_valid_repeated(string& str)
 void profile ::  is_valid_password(string& str)
 {
     bool check=true;
-  string x=insertPasword(str);
-	
+    str.erase(str.begin(), str.end());
+    string x = insertPasword(str);
+	cout << "x:" << x << endl;
     cout<<endl;
     while (true)
     {  
@@ -168,15 +174,19 @@ void profile ::  is_valid_password(string& str)
         }
         else
         {
+            x.erase(x.begin(),x.end());
+
             cout<<"week password\n";
             check=false;
             cout<<"Enter your password again: \n";
-         insertPasword(str);
+            str.erase(str.begin(), str.end());
+            x = insertPasword(str);
+            cout << "x:" << x << endl;
 
-    }    
+        }    
     
-}
-is_valid_repeated(x);
+    }
+    is_valid_repeated(x);
 
 }
 
@@ -185,6 +195,7 @@ is_valid_repeated(x);
 void profile :: login()
 {
     cout << "\nEnter ID, Email, PassWord. \n";
+
     cout << "Please enter your ID: ";
     cin >> IDAttempt;
     while (!check_id(IDAttempt)){
@@ -198,33 +209,51 @@ void profile :: login()
 
     if(checkFile(UserNameAttempt, IDAttempt, "profile_data.txt"))
     {
-        string pass;
+
         cout<<"Enter your password: ";
-       string x= insertPasword(pass);
+        string y ;
+        PassWordAttempt = insertPasword(y);
+
+        cout << "turn=" << turn << endl;
+        cout << "passwordAttempt: " << PassWordAttempt << endl;
 
         for (int i = 0; i < PassWordAttempt.length(); i++)
         {
-            x += encrypt(PassWordAttempt[i]);
+            encryptedPass += encrypt(PassWordAttempt[i]);
         }
-        if(checkFile(pass, IDAttempt, "profile_data.txt"))
+
+        cout << "encryptedpass: " << encryptedPass<< endl;
+
+        if(checkFile(encryptedPass, IDAttempt, "profile_data.txt"))
         {
-            cout << "\nSuccessful login\n\n";
+
             PassWordAttempt.erase(PassWordAttempt.begin(), PassWordAttempt.end());
-            
+            if(turn % 2 == 0)
+            {
+                encryptedPass.erase(encryptedPass.begin(), encryptedPass.end());
+                password.erase(password.begin(), password.end());
+                cout << "\nSuccessful login\n\n";
+            }
+            else
+            {
+                cout << "\nvalid login \n\n" ;
+            }
 
         }else
         {
             cout << "\nInValid PassWord :(\nTry Again :)\n";
             PassWordAttempt.erase(PassWordAttempt.begin(), PassWordAttempt.end());
+            encryptedPass.erase(encryptedPass.begin(), encryptedPass.end());
             login();
         }
     }else
     {
         cout << "\nInvalid UserName or Paasword :(\n try Again :)\n";
         PassWordAttempt.erase(PassWordAttempt.begin(), PassWordAttempt.end());
+        encryptedPass.erase(encryptedPass.begin(), encryptedPass.end());
         login();
     }
-
+    turn = 0;
 }
 
 bool profile :: checkFile(string attempt, string ID, const char* filePath)
@@ -300,7 +329,67 @@ bool profile :: searchForWord(string line, string attempt1)
         return false;
     }
 }
-string profile::insertPasword(string& str) {
+
+void profile :: change_password()
+{
+     
+    string  word, line;
+    ifstream in("profile_data.txt");
+    
+
+    if(!in.is_open())
+    {
+        cout << "Input file failed to open\n";
+
+    }
+    else
+    {
+        turn = 1;
+        login();
+
+        cout << "Please Enter the New password:";
+    
+        is_valid_password(password);
+        
+        for (int i = 0; i < password.length(); i++)
+        {
+            pass += encrypt(password[i]);
+        }
+        
+    }
+
+    fstream newfile;
+    newfile.open("outfile.txt", ios::out);
+
+    
+    while(getline(in, word))
+    {
+       
+        if(word != ("Password: " + encryptedPass))
+        {
+            newfile << word << endl;
+        }else
+        {
+            newfile << "Password: " << pass <<endl;
+            pass.erase(pass.begin(),pass.end());
+        }
+    }
+    encryptedPass.erase(encryptedPass.begin(), encryptedPass.end());
+
+    in.close();
+    newfile.close();
+
+    remove("profile_data.txt");
+
+    rename("outfile.txt", "profile_data.txt");
+
+    cout << "\nYou have changed you Password successfuly\n\n";
+
+    
+}
+
+string profile::insertPasword(string& str) 
+{
 
     
     char ch;
@@ -329,6 +418,7 @@ string profile::insertPasword(string& str) {
             str += ch;
         }
     }
+    cout <<endl << "str:" << str << endl;
     cout << endl;
     return str;
 

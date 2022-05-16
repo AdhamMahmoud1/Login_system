@@ -25,8 +25,12 @@ private:
     string PassWordAttempt;
     string IDAttempt; 
 
+    // change Password variables
+    string New_password;
+    int turn = 0;
+
 public:
-    void data(string n, string i, string m, string pw, string p, string em, string uA, string pA, string iA)
+    void data(string n, string i, string m, string pw, string p, string em, string uA, string pA, string iA, string OP, int t)
     {
         name = n;
         id = i;
@@ -38,6 +42,9 @@ public:
         UserNameAttempt = uA;
         PassWordAttempt = pA;
         IDAttempt = iA;
+
+        New_password = OP;
+        turn = t;
     }
     void registing();
     void saveData();
@@ -56,6 +63,10 @@ public:
     void login();
     bool checkFile(string attempt, string ID, const char* filePath);
     bool searchForWord(string line, string attempt1);
+
+    // change Password functions
+    void change_password();
+
 
 };
 #endif
